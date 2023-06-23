@@ -1,0 +1,24 @@
+[package]
+name = "curve-trees-example"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+rand = { version = "0.8", default-features = false }
+bulletproofs = { path = "../bulletproofs", default-features = false, features = ["std"]}
+relations = { path = "../relations" }
+ark-ec = { version = "0.4.0" }
+ark-std = { version = "0.4.0" }
+ark-secp256k1 = "0.4.0"
+ark-secq256k1 = "0.4.0"
+
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+#[dependencies]
+#curve_trees = "0.1.0"
+#curve_trees = { path = "../curve-trees" }
+
+[[bin]]
+name = "curve-trees-example"
+path = "main.rs"
