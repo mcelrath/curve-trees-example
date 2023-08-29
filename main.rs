@@ -1,21 +1,26 @@
 use ark_ec::short_weierstrass::Affine;
-use ark_ff::Zero;
+use ark_ff::{Zero, PrimeField};
 use ark_secp256k1::{Config as SecpConfig, Fr as SecpScalarBase};
 use ark_secq256k1::Config as SecqConfig;
 use ark_std::UniformRand;
 use rand::thread_rng;
 use relations::curve_tree::*;
 
+const LEAF_WIDTH: usize = 5;
+const VALUES: [&[u8]; LEAF_WIDTH] =  [b"foo", b"bar", b"baz", b"qux", b"quux"];
 const NUM_ELEMENTS: usize = 5;
 const DEPTH: usize = 3;
-const LEAF_WIDTH: usize = 5;
 const GEN_LOG_2: usize = 11;
 
 fn main() {
     let mut rng = thread_rng();
 
+    // See also curve-trees/relations/src/coin.rs:element_from_bytes_stat
+    let leaf_elements: Vec<_> = VALUES
+        .into_iter()
+        .map(|x| SecpScalarBase::from_le_bytes_mod_order(x)).collect();
     // Generate random leaf elements
-    let leaf_elements = generate_random_leaf_elements(&mut rng);
+    //let leaf_elements = generate_random_leaf_elements(&mut rng);
     display_elements("Leaf elements:", &leaf_elements);
 
     // Create select-rerandomize reltion and generate leaf commitments
